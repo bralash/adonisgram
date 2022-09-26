@@ -1,0 +1,12 @@
+@layout('layouts/app')
+
+@section('content')
+@if(auth.isAuthenticated)
+<h1>{{ auth.user.name }}</h1>
+<a href="/logout">Sign out</a>
+@else
+<a href="/login">Login</a>
+@endif
+
+
+@endsection

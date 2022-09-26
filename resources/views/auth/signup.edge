@@ -1,0 +1,52 @@
+@layout('layouts/app')
+@section('content')
+<section class="flex justify-center py-10">
+    <div class="" style="width: 22rem">
+        <article class="border mb-3 p-12 bg-white">
+            <h1>AdonisGram</h1><br>
+            <h2>Sign up to see photos and videos from your friends</h2>
+            <button>Log in with Facebook</button>
+            <p>------ OR ------</p>
+            <form action="/signup" method="POST">
+                <div>
+                    <label for="name">Name</label>
+                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="text" name="name" id="name">
+                    @if(flashMessages.has('errors.name'))
+                    <small>{{flashMessages.get('errors.name')}}</small>
+                    @endif
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="email" name="email" id="email">
+                    @if(flashMessages.has('errors.email'))
+                    <small>{{flashMessages.get('errors.email')}}</small>
+                    @endif
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="password" name="password" id="password">
+                    @if(flashMessages.has('errors.password'))
+                    <small>{{flashMessages.get('errors.password')}}</small>
+                    @endif
+                </div>
+                <div>
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="password" name="password_confirmation" id="password_confirmation">
+                    @if(flashMessages.has('errors.confirm_password'))
+                    <small>{{flashMessages.get('errors.confirm_password')}}</small>
+                    @endif
+                </div>
+                <div>
+                    <input type="submit" value="Sign Up">
+                </div>
+            </form>
+
+            <p>By signing up, you agree to our Terms, Data Policy and Cookies Policy</p>
+        </article>
+        <article class="border text-center px-10 py-5 bg-white">
+            <p>Have an account? <a href="/login" class="text-blue-500">Log in</a></p>
+        </article>
+    </div>
+</section>
+
+@endsection

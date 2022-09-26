@@ -1,0 +1,22 @@
+@layout('layouts/app')
+@section('content')
+<form action="/login" method="POST">
+    <div>
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email">
+        @if(flashMessages.has('errors.email'))
+        <small>{{flashMessages.get('errors.email')}}</small>
+        @endif
+    </div>
+    <div>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password">
+        @if(flashMessages.has('errors.password'))
+        <small>{{flashMessages.get('errors.password')}}</small>
+        @endif
+    </div>
+    <div>
+        <input type="submit" value="Login">
+    </div>
+</form>
+@endsection
