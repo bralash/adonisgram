@@ -2,46 +2,46 @@
 @section('content')
 <section class="flex justify-center py-10">
     <div class="" style="width: 22rem">
-        <article class="border mb-3 p-12 bg-white">
-            <h1>AdonisGram</h1><br>
-            <h2>Sign up to see photos and videos from your friends</h2>
-            <button>Log in with Facebook</button>
-            <p>------ OR ------</p>
+        <article class="border mb-3 px-12 py-6 bg-white">
+            <h1 class="text-center text-4xl">AdonisGram</h1><br>
+            <p class="text-gray-500 text-center py-4 px-2">Sign up to see photos and videos from your friends</p>
+            <button class="bg-blue-500 text-white w-full rounded my-1 px-2 py-1 border">Log in with Facebook</button>
+            <p class="text-center text-gray-400 text-sm py-3">------ OR ------</p>
             <form action="/signup" method="POST">
                 <div>
-                    <label for="name">Name</label>
-                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="text" name="name" id="name">
+                    <input class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border" type="text"
+                        name="name" id="name" placeholder="Full name">
                     @if(flashMessages.has('errors.name'))
                     <small>{{flashMessages.get('errors.name')}}</small>
                     @endif
                 </div>
                 <div>
-                    <label for="email">Email</label>
-                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="email" name="email" id="email">
+                    <input class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border" type="email"
+                        name="email" id="email" placeholder="Mobile Number or Email">
                     @if(flashMessages.has('errors.email'))
                     <small>{{flashMessages.get('errors.email')}}</small>
                     @endif
                 </div>
                 <div>
-                    <label for="password">Password</label>
-                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="password" name="password" id="password">
+                    <input class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border" type="password"
+                        name="password" id="password" placeholder="Password">
                     @if(flashMessages.has('errors.password'))
                     <small>{{flashMessages.get('errors.password')}}</small>
                     @endif
                 </div>
-                <div>
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input class="bg-gray-200 w-full rounded my-1 p-2 border" type="password" name="password_confirmation" id="password_confirmation">
+                <div class="mb-3">
+                    <input class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border" type="password"
+                        name="password_confirmation" id="password_confirmation" placeholder="Confirm Password">
                     @if(flashMessages.has('errors.confirm_password'))
                     <small>{{flashMessages.get('errors.confirm_password')}}</small>
                     @endif
                 </div>
                 <div>
-                    <input type="submit" value="Sign Up">
+                    <input class="bg-blue-500 text-white w-full rounded my-1 px-2 py-1 border" type="submit" value="Sign Up">
                 </div>
             </form>
 
-            <p>By signing up, you agree to our Terms, Data Policy and Cookies Policy</p>
+            <p class="py-4 px-3 text-xs text-gray-500 text-center">By signing up, you agree to our Terms, Data Policy and Cookies Policy.</p>
         </article>
         <article class="border text-center px-10 py-5 bg-white">
             <p>Have an account? <a href="/login" class="text-blue-500">Log in</a></p>
