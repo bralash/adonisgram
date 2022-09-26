@@ -1,22 +1,43 @@
 @layout('layouts/app')
 @section('content')
-<form action="/login" method="POST">
-    <div>
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email">
-        @if(flashMessages.has('errors.email'))
-        <small>{{flashMessages.get('errors.email')}}</small>
-        @endif
+
+<section class="flex justify-center py-10">
+    <div style="width: 22rem">
+        <article class="border mb-3 px-10 py-6 bg-white">
+            <h1 class="text-center text-4xl mb-8">AdonisGram</h1>
+            <form action="/login" method="POST">
+                <div>
+                    <input
+                        class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border border-gray-300"
+                        type="email" name="email" id="email" placeholder="Email">
+                    @if(flashMessages.has('errors.email'))
+                    <small>{{flashMessages.get('errors.email')}}</small>
+                    @endif
+                </div>
+                <div class="mb-3">
+                    <input
+                        class="text-xs placeholder-gray-600 bg-gray-200 w-full rounded my-1 px-3 py-2 border border-gray-300"
+                        type="password" name="password" id="password" placeholder="Password">
+                    @if(flashMessages.has('errors.password'))
+                    <small>{{flashMessages.get('errors.password')}}</small>
+                    @endif
+                </div>
+                <div>
+                    <input class="bg-blue-500 text-white w-full rounded my-1 px-2 py-1 border" type="submit"
+                        value="Login">
+                </div>
+            </form>
+
+            <p class="text-center text-gray-400 text-sm py-3">------ OR ------</p>
+            <p class="text-center text-sm py-1 text-gray-600">Log in with Facebook</p>
+            <p class="text-center text-sm py-1 text-gray-600">
+                <a href="">Forgot Password?</a>
+            </p>
+        </article>
+        <article class="border text-center px-10 py-5 bg-white">
+            <p>Have an account? <a href="/signup" class="text-blue-500">Sign Up</a></p>
+        </article>
     </div>
-    <div>
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password">
-        @if(flashMessages.has('errors.password'))
-        <small>{{flashMessages.get('errors.password')}}</small>
-        @endif
-    </div>
-    <div>
-        <input type="submit" value="Login">
-    </div>
-</form>
+</section>
+
 @endsection
