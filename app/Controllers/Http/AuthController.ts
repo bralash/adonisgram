@@ -1,26 +1,25 @@
-import Mail from "@ioc:Adonis/Addons/Mail";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { schema, rules } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
 
 export default class AuthController {
   public async index(ctx: HttpContextContract) {
-    return ctx.view.render("welcome", {title: 'Welcome to AdonisGram'});
+    return ctx.view.render("welcome", { title: "Welcome to AdonisGram" });
   }
 
   public async showSignup(ctx: HttpContextContract) {
-    return ctx.view.render("auth/signup", {title: 'Sign Up'});
+    return ctx.view.render("auth/signup", { title: "Sign Up" });
   }
 
   public async showLogin(ctx: HttpContextContract) {
-    return ctx.view.render("auth/login", {title: 'Login'});
+    return ctx.view.render("auth/login", { title: "Login" });
   }
 
   public async showProfile(ctx: HttpContextContract) {
-    return ctx.view.render('profile', {title: 'Profile'});
+    return ctx.view.render("profile", { title: "Profile" });
   }
 
-  public async signup({ request, response }: HttpContextContract) {
+  public async signup({ request, response, session }: HttpContextContract) {
     const req = await request.validate({
       schema: schema.create({
         name: schema.string(),
@@ -40,13 +39,7 @@ export default class AuthController {
     user.password = req.password;
     await user.save();
 
-    Mail.send((message) => {
-        message
-        .from('verify@adonisgram.com')
-        .to(user.email)
-        .subject('Please verify your email address')
-        .htmlView('emails/verify', { user })
-    })
+    user.sendVerificationEmail(session);
 
     return response.redirect("/login");
   }
@@ -55,7 +48,7 @@ export default class AuthController {
     const req = await request.validate({
       schema: schema.create({
         email: schema.string({}, [rules.email()]),
-        password: schema.string({}, [rules.minLength(8)]),
+        password: schema.string({}),
       }),
       messages: {
         "email.required": "Email cannot be empty",
@@ -64,12 +57,25 @@ export default class AuthController {
       },
     });
 
-    await auth.attempt(req.email, req.password)
-    return response.redirect('/profile');
+    await auth.attempt(req.email, req.password);
+    return response.redirect("/profile");
   }
 
   public async logout({ auth, response }: HttpContextContract) {
     await auth.logout();
-    return response.redirect('/')
+    return response.redirect("/");
+  }
+
+  public async verifyEmail({ auth, response, session }: HttpContextContract) {
+    auth.user?.sendVerificationEmail(session);
+    return response.redirect().back();
+  }
+
+  public async confirmEmail({ params, session }: HttpContextContract) {
+    const userId = params.uid
+    const token = params.token
+    const user = User.findOrFail(userId);
+    // return user
+    return session.get(`${token}-${userId}`);
   }
 }
