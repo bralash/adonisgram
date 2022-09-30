@@ -1,6 +1,7 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { schema, rules } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
+import { DateTime } from "luxon";
 
 export default class AuthController {
   public async index(ctx: HttpContextContract) {
@@ -66,16 +67,18 @@ export default class AuthController {
     return response.redirect("/");
   }
 
-  public async verifyEmail({ auth, response, session }: HttpContextContract) {
-    auth.user?.sendVerificationEmail(session);
+  public async verifyEmail({ auth, response }: HttpContextContract) {
+    auth.user?.sendVerificationEmail();
     return response.redirect().back();
   }
 
-  public async confirmEmail({ params, session }: HttpContextContract) {
-    const userId = params.uid
-    const token = params.token
-    const user = User.findOrFail(userId);
-    // return user
-    return session.get(`${token}-${userId}`);
+  public async confirmEmail({ request, response, params }: HttpContextContract) {
+    const user = await User.findByOrFail('email', params.email)
+    if (request.hasValidSignature()) {
+      user.email_verified_at = DateTime.local();
+      user.save();
+      return response.redirect("/profile");
+    } 
+    return "Invalid Token";
   }
 }
