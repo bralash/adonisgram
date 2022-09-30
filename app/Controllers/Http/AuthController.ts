@@ -20,17 +20,19 @@ export default class AuthController {
     return ctx.view.render("profile", { title: "Profile" });
   }
 
-  public async signup({ request, response, session }: HttpContextContract) {
+  public async signup({ request, response }: HttpContextContract) {
     const req = await request.validate({
       schema: schema.create({
         name: schema.string(),
         email: schema.string({}, [rules.email()]),
         password: schema.string({}, [rules.confirmed()]),
+        username: schema.string({}, [rules.maxLength(25), rules.minLength(3)]),
       }),
       messages: {
         "name.required": "Name is required to sign up",
         "email.required": "Email is required to sign up",
         "password.required": "Password is required to sign up",
+        "username.required": "Username is required to sign up"
       },
     });
 
@@ -38,9 +40,10 @@ export default class AuthController {
     user.name = req.name;
     user.email = req.email;
     user.password = req.password;
+    user.username = req.username
     await user.save();
 
-    user.sendVerificationEmail(session);
+    user.sendVerificationEmail();
 
     return response.redirect("/login");
   }
