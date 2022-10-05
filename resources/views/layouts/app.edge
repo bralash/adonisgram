@@ -6,16 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
+    <nav class="w-full bg-white shadow-md border flex justify-center px-4 py-2">
+        <div class="flex w-1/2 justify-between">
+            <h1 class="text-xl font-semibold">
+                <a href="/">AdonisGram</a>
+            </h1>
+            <div>
+                @if(auth.isAuthenticated)
+                <img src="{{auth.user.avatar}}" alt="User avatar" class="h-8 w-8 rounded-full border">
+                @endif
+            </div>
+        </div>
+    </nav>
 
-    <section class="bg-gray-100 min-h-screen">
-        @section('content')
+    <div class="bg-gray-100 min-h-screen flex justify-center">
+        <section class="w-full md:w-1/2">
+            @section('content')
 
-        @endsection
-    </section>
+            @endsection
+        </section>
+    </div>
+
 
 </body>
 

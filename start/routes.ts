@@ -1,13 +1,20 @@
 import Route from '@ioc:Adonis/Core/Route'
 
 
+// Authentication
 Route.get('/','AuthController.index')
 Route.get('signup', 'AuthController.showSignup').middleware('guest')
 Route.get('login', 'AuthController.showLogin').middleware('guest')
-Route.get('/profile', 'AuthController.showProfile').middleware('auth')
 Route.get('/logout', 'AuthController.logout')
-Route.get('verify-email/:email', 'AuthController.confirmEmail').as('verifyEmail')
-
 Route.post('signup', 'AuthController.signup')
 Route.post('login', 'AuthController.login')
-Route.post('verify-email', 'AuthController.verifyEmail').middleware('auth')
+
+
+// Emails
+Route.get('verify-email/:email', 'EmailsController.confirmEmail').as('verifyEmail')
+Route.post('verify-email', 'EmailsController.verifyEmail').middleware('auth')
+
+
+Route.get('/accounts/edit', 'ProfilesController.edit').middleware('auth')
+Route.post('/accounts/edit', 'ProfilesController.update').middleware('auth')
+Route.get('/:username', 'ProfilesController.index').middleware('auth')

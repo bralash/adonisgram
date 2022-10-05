@@ -1,7 +1,6 @@
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import { schema, rules } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
-import { DateTime } from "luxon";
 
 export default class AuthController {
   public async index(ctx: HttpContextContract) {
@@ -32,7 +31,7 @@ export default class AuthController {
         "name.required": "Name is required to sign up",
         "email.required": "Email is required to sign up",
         "password.required": "Password is required to sign up",
-        "username.required": "Username is required to sign up"
+        "username.required": "Username is required to sign up",
       },
     });
 
@@ -40,7 +39,7 @@ export default class AuthController {
     user.name = req.name;
     user.email = req.email;
     user.password = req.password;
-    user.username = req.username
+    user.username = req.username;
     await user.save();
 
     user.sendVerificationEmail();
@@ -49,6 +48,7 @@ export default class AuthController {
   }
 
   public async login({ request, auth, response }: HttpContextContract) {
+    const rememberMe = await request.input("remember-me") === 'on' ? true : false;
     const req = await request.validate({
       schema: schema.create({
         email: schema.string({}, [rules.email()]),
@@ -61,27 +61,12 @@ export default class AuthController {
       },
     });
 
-    await auth.attempt(req.email, req.password);
-    return response.redirect("/profile");
+    const user = await auth.attempt(req.email, req.password, rememberMe);
+    return response.redirect(`/${user.username}`);
   }
 
   public async logout({ auth, response }: HttpContextContract) {
     await auth.logout();
     return response.redirect("/");
-  }
-
-  public async verifyEmail({ auth, response }: HttpContextContract) {
-    auth.user?.sendVerificationEmail();
-    return response.redirect().back();
-  }
-
-  public async confirmEmail({ request, response, params }: HttpContextContract) {
-    const user = await User.findByOrFail('email', params.email)
-    if (request.hasValidSignature()) {
-      user.email_verified_at = DateTime.local();
-      user.save();
-      return response.redirect("/profile");
-    } 
-    return "Invalid Token";
   }
 }

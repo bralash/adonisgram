@@ -13,6 +13,7 @@ export default class Users extends BaseSchema {
       table.string('bio').nullable()
       table.dateTime('email_verified_at').nullable()
       table.string('password')
+      table.string('remember_me_token').nullable()
       table.timestamps(true)
     })
   }
