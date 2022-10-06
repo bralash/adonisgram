@@ -8,8 +8,10 @@ export default class ProfilesController {
     if (!user) {
       return view.render("errors/not-found", { title: "404 - Page not found" });
     }
-    return view.render("profile", { title: `${user.name} - Profile` });
+    await user.load('posts')
+    return view.render("profile", { title: `${user.name} - Profile` , user});
   }
+
 
   public async edit({ view }: HttpContextContract) {
     return view.render("accounts/edit");

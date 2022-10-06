@@ -14,7 +14,11 @@ Route.post('login', 'AuthController.login')
 Route.get('verify-email/:email', 'EmailsController.confirmEmail').as('verifyEmail')
 Route.post('verify-email', 'EmailsController.verifyEmail').middleware('auth')
 
+// Posts
+Route.get('/posts/create', 'PostsController.create').middleware('auth')
+Route.post('/posts/create', 'PostsController.store').middleware('auth')
 
+// Profile
 Route.get('/accounts/edit', 'ProfilesController.edit').middleware('auth')
 Route.post('/accounts/edit', 'ProfilesController.update').middleware('auth')
 Route.get('/:username', 'ProfilesController.index').middleware('auth')
