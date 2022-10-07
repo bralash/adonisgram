@@ -48,7 +48,8 @@ export default class AuthController {
   }
 
   public async login({ request, auth, response }: HttpContextContract) {
-    const rememberMe = await request.input("remember-me") === 'on' ? true : false;
+    const rememberMe =
+      (await request.input("remember-me")) === "on" ? true : false;
     const req = await request.validate({
       schema: schema.create({
         email: schema.string({}, [rules.email()]),

@@ -3,7 +3,7 @@ import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import User from "App/Models/User";
 
 export default class ProfilesController {
-  public async index({ view, params }: HttpContextContract) {
+  public async index({ view, params, auth }: HttpContextContract) {
     const user = await User.findBy("username", params.username);
     if (!user) {
       return view.render("errors/not-found", { title: "404 - Page not found" });
