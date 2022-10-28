@@ -1,7 +1,7 @@
 import Application from "@ioc:Adonis/Core/Application";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import User from "App/Models/User";
-import { UserFactory } from "Database/factories";
+// import { UserFactory } from "Database/factories";
 
 export default class ProfilesController {
   public async index({ view, params }: HttpContextContract) {
@@ -35,3 +35,4 @@ export default class ProfilesController {
     return response.redirect(`/${user?.username}`);
   }
 }
+ 

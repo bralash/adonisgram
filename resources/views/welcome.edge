@@ -1,11 +1,34 @@
 @layout('layouts/app')
 
 @section('content')
-@if(auth.isAuthenticated)
-<h1>{{ auth.user.name }}</h1>
-<a href="/logout">Sign out</a>
-@else
-<a href="/login">Login</a>
+    @each(post in posts)
+        <div class="border-2 bg-white w-9/12 my-6">
+            <div class="px-3 py-2 flex items-center justify-between">
+                <div class="flex items-center">
+                    <img src="{{post.user.avatar}}" alt="" class="h-10 w-10 rounded-full border-2 border-orange-500">
+                    <a href="{{post.user.username}}" class="mx-3">{{post.user.username}}</a>
+                </div>
+                <div>
+                    <p class="font-semibold tracking-wider">...</p>
+                </div>
+            </div>
+            <img src="{{post.image}}" width="100%" alt="">
+            <div class="p-4">
+                <div class="flex">
+                    <a href="{{post.user.username}}" class="font-semibold">{{post.user.username}}</a>
+                    <p class="mx-3">{{post.caption}}</p>
+                </div>
+                <p class="text-gray-500 my-5">{{post.createdAt}}</p>
+                
+            </div>
+        </div>
+    @endeach
+
+    @if(auth.isAuthenticated)
+        <h1>{{ auth.user.name }}</h1>
+        <a href="/logout">Sign out</a>
+    @else
+        <a href="/login">Login</a>
 @endif
 
 

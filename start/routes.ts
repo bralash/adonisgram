@@ -2,7 +2,7 @@ import Route from '@ioc:Adonis/Core/Route'
 
 
 // Authentication
-Route.get('/','AuthController.index')
+Route.get('/','HomeController.index')
 Route.get('signup', 'AuthController.showSignup').middleware('guest')
 Route.get('login', 'AuthController.showLogin').middleware('guest')
 Route.get('/logout', 'AuthController.logout')

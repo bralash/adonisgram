@@ -3,10 +3,6 @@ import { schema, rules } from "@ioc:Adonis/Core/Validator";
 import User from "App/Models/User";
 
 export default class AuthController {
-  public async index(ctx: HttpContextContract) {
-    return ctx.view.render("welcome", { title: "Welcome to AdonisGram" });
-  }
-
   public async showSignup(ctx: HttpContextContract) {
     return ctx.view.render("auth/signup", { title: "Sign Up" });
   }
