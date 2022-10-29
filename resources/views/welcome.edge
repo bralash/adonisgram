@@ -18,7 +18,7 @@
                     <a href="{{post.user.username}}" class="font-semibold">{{post.user.username}}</a>
                     <p class="mx-3">{{post.caption}}</p>
                 </div>
-                <p class="text-gray-500 my-5">{{post.createdAt}}</p>
+                <p class="text-gray-500 my-3 text-xs">{{post.createdAt.toFormat('DD')}}</p>
                 
             </div>
         </div>

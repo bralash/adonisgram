@@ -18,6 +18,9 @@ Route.post('verify-email', 'EmailsController.verifyEmail').middleware('auth')
 Route.get('/posts/create', 'PostsController.create').middleware('auth')
 Route.post('/posts/create', 'PostsController.store').middleware('auth')
 
+Route.post('/follow/:userId', 'FollowsController.store').middleware('auth')
+
+
 // Profile
 Route.get('/accounts/edit', 'ProfilesController.edit').middleware('auth')
 Route.post('/accounts/edit', 'ProfilesController.update').middleware('auth')

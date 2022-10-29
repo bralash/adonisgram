@@ -1,16 +1,18 @@
 import Application from "@ioc:Adonis/Core/Application";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import User from "App/Models/User";
+import authConfig from "Config/auth";
 // import { UserFactory } from "Database/factories";
 
 export default class ProfilesController {
-  public async index({ view, params }: HttpContextContract) {
+  public async index({ view, params, auth }: HttpContextContract) {
     const user = await User.findBy("username", params.username);
     // await UserFactory.with('posts',5).createMany(10)
     if (!user) {
       return view.render("errors/not-found", { title: "404 - Page not found" });
     }
     await user.load('posts')
+    await auth.user.load('followings')
     return view.render("profile", { title: `${user.name} - Profile` , user});
   }
 

@@ -11,6 +11,13 @@
             <a href="/accounts/edit" class="border border-gray-400 mx-4 rounded px-2 pt-1 font-semibold">
                 Edit Profile
             </a>
+            @else
+            {{inspect(auth.user.followings)}}
+            <form action="{{`/follow/${user.id}`}}" method="post">
+                <button type="submit" class="bg-blue-500 text-sm text-white mx-4 rounded mt-1 px-2 pt-1 font-semibold pb-1">
+                    Follow
+                </button>
+            </form>
             @endif
         </div>
 
