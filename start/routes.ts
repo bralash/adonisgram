@@ -19,6 +19,7 @@ Route.get('/posts/create', 'PostsController.create').middleware('auth')
 Route.post('/posts/create', 'PostsController.store').middleware('auth')
 
 Route.post('/follow/:userId', 'FollowsController.store').middleware('auth')
+Route.delete('/unfollow/:userId', 'FollowsController.destroy').middleware('auth')
 
 
 // Profile

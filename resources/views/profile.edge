@@ -12,19 +12,27 @@
                 Edit Profile
             </a>
             @else
-            {{inspect(auth.user.followings)}}
-            <form action="{{`/follow/${user.id}`}}" method="post">
-                <button type="submit" class="bg-blue-500 text-sm text-white mx-4 rounded mt-1 px-2 pt-1 font-semibold pb-1">
-                    Follow
-                </button>
-            </form>
+                @if(auth.user.followings.map(f => f.followingId).includes(user.id))
+                    <form action="{{`/unfollow/${user.id}?_method=delete`}}" method="post">
+                        <button type="submit" class="bg-red-500 text-sm text-white mx-4 rounded mt-1 px-2 pt-1 font-semibold pb-1">
+                            Unfollow
+                        </button>
+                    </form>
+                @else
+                    <form action="{{`/follow/${user.id}`}}" method="post">
+                        <button type="submit" class="bg-blue-500 text-sm text-white mx-4 rounded mt-1 px-2 pt-1 font-semibold pb-1">
+                            Follow
+                        </button>
+                    </form>
+                @endif
+            
             @endif
         </div>
 
         <div class="flex my-5">
             <p class="mr-8"><span class="font-semibold">{{user.posts.length}}</span> posts</p>
-            <p class="mr-8"><span class="font-semibold">1000</span> followers</p>
-            <p class="mr-8"><span class="font-semibold">10</span> following</p>
+            <p class="mr-8"><span class="font-semibold">{{followers}}</span> followers</p>
+            <p class="mr-8"><span class="font-semibold">{{auth.user.followings.length}}</span> following</p>
         </div>
         <p class="mr-8">
             {{user.bio}}

@@ -13,7 +13,8 @@ export default class ProfilesController {
     }
     await user.load('posts')
     await auth.user.load('followings')
-    return view.render("profile", { title: `${user.name} - Profile` , user});
+    const followers = await auth.user?.followers()
+    return view.render("profile", { title: `${user.name} - Profile` , user,followers});
   }
 
 
