@@ -1,9 +1,15 @@
-import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Post from 'App/Models/Post';
+import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
+import Post from "App/Models/Post";
 
 export default class HomeController {
-    public async index(ctx: HttpContextContract) {
-        const posts = await Post.query().preload('user');
-        return ctx.view.render("welcome", { title: "Welcome to AdonisGram", posts});
-      }
+  public async index({ view, auth }: HttpContextContract) {
+    await auth.user?.preload("followings");
+    const followings = auth.user?.followings.map((f) => f.followingId);
+    const userIds = [auth.user?.id, ...(followings ?? [])];
+  
+    const posts = await Post.query()
+      .whereIn("user_id", userIds)
+      .preload("user");
+    return view.render("welcome", { title: "Welcome to AdonisGram", posts });
+  }
 }

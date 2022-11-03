@@ -2,6 +2,7 @@ import Application from "@ioc:Adonis/Core/Application";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import User from "App/Models/User";
 import authConfig from "Config/auth";
+import Following from "App/Models/Following";
 // import { UserFactory } from "Database/factories";
 
 export default class ProfilesController {
@@ -12,8 +13,11 @@ export default class ProfilesController {
       return view.render("errors/not-found", { title: "404 - Page not found" });
     }
     await user.load('posts')
+    await user.load('followings')
     await auth.user.load('followings')
-    const followers = await auth.user?.followers()
+    const followers = await Following.query().where('following_id', user.id)
+    // const followers = await auth.user?.followers()
+    // return followers
     return view.render("profile", { title: `${user.name} - Profile` , user,followers});
   }
 

@@ -14,11 +14,6 @@ export default class User extends BaseModel {
   @hasMany(()=> Following)
   public followings: HasMany<typeof Following>
 
-  public async followers() {
-    const followers = await Following.query().where('following_id', this.id)
-    return followers.length
-  }
-
   @column({ isPrimary: true })
   public id: number;
 
