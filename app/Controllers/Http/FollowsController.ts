@@ -14,6 +14,6 @@ export default class FollowsController {
   public async destroy({params,auth,response}: HttpContextContract) {
     const follow = Following.query().where('user_id', auth.user.id).where('following_id',params.userId)
     await follow.delete()
-    return response.redirect().back();
+    
   }
 }

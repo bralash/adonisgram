@@ -14,7 +14,7 @@
 
 <body>
     <nav class="w-full bg-white shadow-md border flex justify-center px-4 py-2">
-        <div class="flex w-1/2 justify-between">
+        <div class="flex w-1/2 justify-between items-center">
             <h1 class="text-xl font-semibold">
                 <a href="/">AdonisGram</a>
             </h1>
@@ -25,11 +25,23 @@
             @endif
             <div>
                 @if(auth.isAuthenticated)
-                <a href="{{auth.user.username}}">
-                    <img src="{{auth.user.avatar}}" alt="User avatar" class="h-8 w-8 rounded-full border">
-                </a>
+                
+                <div class="relative inline-block text-left">
+                    <div id="dropdown">
+                        <img src="{{auth.user.avatar}}" alt="User avatar" class="h-8 w-8 rounded-full border">
+                    </div>
+                   
+                    <div id="dropdown-items" class="hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                      <div class="" role="none">
+                        <a href="{{auth.user.username}}" class="hover:bg-gray-100 border-b border-gray-100 text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Profile</a>
+                        <form method="POST" action="#" role="none">
+                          <a href="/logout" class="hover:bg-gray-100 text-gray-700 block w-full px-4 py-2 text-left text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Sign out</a>
+                        </form>
+                      </div>
+                    </div>
+                </div>
                 @endif
-            </div>
+            </div> 
         </div>
     </nav>
 
@@ -41,7 +53,7 @@
         </section>
     </div>
 
-
+    <script src="js/script.js"></script>
 </body>
 
 </html>
