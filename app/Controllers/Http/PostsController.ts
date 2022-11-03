@@ -30,7 +30,7 @@ export default class PostsController {
     const post = new Post();
     post.image = `images/${imageName}`;
     post.caption = req.caption;
-    post.userId = user.id;
+    post.userId = user!.id;
 
     await post.save();
     return response.redirect(`/${user?.username}`);

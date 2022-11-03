@@ -1,7 +1,6 @@
 import Application from "@ioc:Adonis/Core/Application";
 import type { HttpContextContract } from "@ioc:Adonis/Core/HttpContext";
 import User from "App/Models/User";
-import authConfig from "Config/auth";
 import Following from "App/Models/Following";
 // import { UserFactory } from "Database/factories";
 
@@ -14,7 +13,7 @@ export default class ProfilesController {
     }
     await user.load('posts')
     await user.load('followings')
-    await auth.user.load('followings')
+    await auth.user!.load('followings')
     const followers = await Following.query().where('following_id', user.id)
     // const followers = await auth.user?.followers()
     // return followers
@@ -34,11 +33,11 @@ export default class ProfilesController {
       await avatar.move(Application.publicPath("images"), {
         name: imageName,
       });
-      user.avatar = `images/${imageName}`;
+      user!.avatar = `images/${imageName}`;
     }
 
-    user.bio = request.input("bio");
-    await user?.save();
+    user!.bio = request.input("bio");
+    await user!.save();
     return response.redirect(`/${user?.username}`);
   }
 }

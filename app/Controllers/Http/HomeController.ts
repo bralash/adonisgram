@@ -7,12 +7,10 @@ export default class HomeController {
       return response.redirect('/login')
     }
     await auth.user?.preload("followings");
-    const followings = auth.user?.followings.map((f) => f.followingId);
-    const userIds = [auth.user?.id, ...(followings ?? [])];
+    const followings = auth.user!.followings.map((f) => f.followingId);
+    const userIds = [auth.user!.id, ...(followings ?? [])];
   
-    const posts = await Post.query()
-      .whereIn("user_id", userIds)
-      .preload("user").orderBy('created_at','desc')
+    const posts = await Post.query().whereIn("user_id",userIds).preload("user").orderBy('created_at','desc')
       // return followings
     return view.render("welcome", { title: "Welcome to AdonisGram", posts });
   }
