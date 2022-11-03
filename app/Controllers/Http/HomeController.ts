@@ -9,7 +9,8 @@ export default class HomeController {
   
     const posts = await Post.query()
       .whereIn("user_id", userIds)
-      .preload("user");
+      .preload("user").orderBy('created_at','desc')
+      // return followings
     return view.render("welcome", { title: "Welcome to AdonisGram", posts });
   }
 }

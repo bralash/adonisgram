@@ -9,7 +9,7 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
     email: faker.internet.email(),
     username: faker.internet.userName(),
     password: faker.internet.password(),
-    bio: faker.lorem.sentences(),
+    bio: faker.lorem.word(),
     email_verified_at: DateTime.local(),
     avatar: faker.image.avatar(),
   };
@@ -19,7 +19,7 @@ export const UserFactory = Factory.define(User, ({ faker }) => {
 
 export const PostFactory = Factory.define(Post, ({ faker }) => {
   return {
-    image: faker.image.animals(),
+    image: faker.image.nature()+'?random=$'+Math.round(Math.random() * 1000),
     caption: faker.lorem.paragraph(),
   };
 })
