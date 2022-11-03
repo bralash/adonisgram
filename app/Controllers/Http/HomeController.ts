@@ -9,8 +9,9 @@ export default class HomeController {
     await auth.user?.preload("followings");
     const followings = auth.user!.followings.map((f) => f.followingId);
     const userIds = [auth.user!.id, ...(followings ?? [])];
+    const newIds = userIds.map(String)
   
-    const posts = await Post.query().whereIn("user_id",userIds).preload("user").orderBy('created_at','desc')
+    const posts = await Post.query().whereIn("user_id",newIds).preload("user").orderBy('created_at','desc')
       // return followings
     return view.render("welcome", { title: "Welcome to AdonisGram", posts });
   }
